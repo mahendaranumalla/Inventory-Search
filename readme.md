@@ -98,8 +98,9 @@ InventorySearchController
 Request Validation (@Valid + Custom Validators)
 
 ↓
-(Invalid → GlobalExceptionHandler → 400 Error Response)
-
+  ->  (Invalid → GlobalExceptionHandler → 400 Error Response)
+    
+(Valid)
 ↓
 
 InventoryService
