@@ -39,7 +39,7 @@ public class GlobalExceptionHandler {
     public ResponseEntity<ErrorResponse> handleNotFound(NoHandlerFoundException ex) {
         ErrorResponse error =  ErrorResponse.builder()
                 .status(HttpStatus.NOT_FOUND.value())
-                .message("API not found")
+                .message("Resource not found")
                 .timestamp(LocalDateTime.now())
                 .build();
         return new ResponseEntity<ErrorResponse>(error, HttpStatus.NOT_FOUND);
@@ -48,7 +48,7 @@ public class GlobalExceptionHandler {
     public ResponseEntity<ErrorResponse> handleNotFound(NoResourceFoundException ex) {
         ErrorResponse error =  ErrorResponse.builder()
                 .status(HttpStatus.NOT_FOUND.value())
-                .message("API not found")
+                .message("Resource not found")
                 .timestamp(LocalDateTime.now())
                 .build();
         return new ResponseEntity<ErrorResponse>(error, HttpStatus.NOT_FOUND);
