@@ -1,0 +1,172 @@
+openapi: 3.0.3
+info:
+  title: Inventory Search API
+  version: 1.0.0
+  description: API for searching inventory items with dynamic filters
+
+servers:
+  - url: http://localhost:8080
+    description: Local server
+
+paths:
+  /api/inventory/search:
+    post:
+      summary: Search inventory items
+      description: |
+        Dynamic search API for inventory.
+        All fields are optional and used as filters.
+      operationId: searchInventory
+      tags:
+        - Inventory Search
+
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/InventorySearchRequest'
+
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InventorySearchResponse'
+
+        '400':
+          description: Invalid request
+
+        '500':
+          description: Internal server error
+
+components:
+  schemas:
+
+    InventorySearchRequest:
+      type: object
+      properties:
+        keyword:
+          type: string
+          example: iphone
+
+        category:
+          type: string
+          example: Electronics
+
+        subcategory:
+          type: string
+          example: Mobile
+
+        model:
+          type: string
+          example: iPhone 15
+
+        seller:
+          type: string
+          example: Apple Store
+
+        location:
+          type: string
+          example: Chennai
+
+        minPrice:
+          type: number
+          format: double
+          example: 50000
+
+        maxPrice:
+          type: number
+          format: double
+          example: 100000
+
+        manufacturedAfter:
+          type: string
+          format: date
+          example: 2025-01-01
+
+        expiryBefore:
+          type: string
+          format: date
+          example: 2027-01-01
+
+        inStock:
+          type: boolean
+          example: true
+
+    InventorySearchResponse:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/InventoryItem'
+
+        pagination:
+          $ref: '#/components/schemas/Pagination'
+
+        sorting:
+          $ref: '#/components/schemas/Sorting'
+
+    InventoryItem:
+      type: object
+      properties:
+        name:
+          type: string
+
+        category:
+          type: string
+
+        subcategory:
+          type: string
+
+        manufacturingDate:
+          type: string
+          format: date
+
+        expiryDate:
+          type: string
+          format: date
+          nullable: true
+
+        specification:
+          type: string
+
+        price:
+          type: number
+          format: double
+
+        stock:
+          type: integer
+
+        model:
+          type: string
+
+        seller:
+          type: string
+
+        location:
+          type: string
+
+    Pagination:
+      type: object
+      properties:
+        page:
+          type: integer
+          example: 0
+
+        size:
+          type: integer
+          example: 20
+
+    Sorting:
+      type: object
+      properties:
+        field:
+          type: string
+          example: price
+
+        direction:
+          type: string
+          enum: [ASC, DESC]
+          example: ASC
