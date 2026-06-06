@@ -1,18 +1,8 @@
-# Build stage
-FROM maven:3.9.6-eclipse-temurin-17 AS build
-
-WORKDIR /app
-COPY pom.xml .
-COPY src ./src
-
-RUN mvn clean package -DskipTests
-
 # Run stage
-FROM eclipse-temurin:17-jdk
-
+FROM openjdk:17
 WORKDIR /app
 
-COPY --from=build /app/target/*.jar inventory-search.jar
+COPY --from=build /app/target/search-0.0.1-SNAPSHOT.jar inventory-search.jar
 
 EXPOSE 8080
 
